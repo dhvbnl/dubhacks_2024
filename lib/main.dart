@@ -1,7 +1,9 @@
 import 'package:dubhacks/views/history/history.dart';
+import 'package:dubhacks/views/homepage/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -67,7 +69,7 @@ class _MyAppState extends State<MyApp> {
             DefaultCupertinoLocalizations.delegate,
           ],
           title: 'Flutter Platform Widgets',
-          home: History(),
+          home: HomePage(),
         ),
       ),
       // ),
