@@ -110,6 +110,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05E7253B7250A229D6EC5864 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				362C278D893570D47FBA901F /* Pods-Runner.debug.xcconfig */,
+				463B3F539C3A270BB61938CD /* Pods-Runner.release.xcconfig */,
+				B87AFB048AF3D381176EA80F /* Pods-Runner.profile.xcconfig */,
+				5AC423E73022919A5033A139 /* Pods-RunnerTests.debug.xcconfig */,
+				0EC0EE53AFFA0271BA8AF2F6 /* Pods-RunnerTests.release.xcconfig */,
+				C63EDDF6748492067C0FED67 /* Pods-RunnerTests.profile.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		331C80D6294CF71000263BE5 /* RunnerTests */ = {
 			isa = PBXGroup;
 			children = (
