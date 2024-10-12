@@ -5,7 +5,7 @@ class Still {
   final DateTime _date;
   final AssetImage _photo;
 
-  Still(String prompt, NetworkImage photo)
+  Still(String prompt, AssetImage photo)
       : _prompt = prompt,
         _date = DateTime.now(),
         _photo =
