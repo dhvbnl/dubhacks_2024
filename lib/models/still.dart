@@ -1,25 +1,20 @@
-import 'package:image/image.dart';
+import 'package:flutter/cupertino.dart';
 
 class Still {
   final String _prompt;
   final DateTime _date;
-  final Image _photo;
+  final AssetImage _photo;
 
-  Still(String prompt, Image photo)
+  Still(String prompt, NetworkImage photo)
       : _prompt = prompt,
         _date = DateTime.now(),
-        _photo = copyImage(
-            photo); // Assuming copyImage is a function that returns a copy of the Image.
+        _photo =
+            photo; // Assuming copyImage is a function that returns a copy of the Image.
 
   String get getPrompt => _prompt;
 
   DateTime get getDate =>
       _date; // Returns a copy of DateTime with hour and minute.
 
-  Image get getPhoto => copyImage(_photo); // Returns a copy of the Image.
-
-  // Create Image copy
-  static Image copyImage(Image original) {
-    return Image.from(original);
-  }
+  AssetImage get getPhoto => _photo; // Returns a copy of the Image.
 }
