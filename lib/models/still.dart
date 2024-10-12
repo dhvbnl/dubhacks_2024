@@ -13,12 +13,12 @@ class Still {
 
   String get getPrompt => _prompt;
 
-  DateTime get getDate => DateTime(
-      _date.year, _date.month, _date.day); // Returns a copy of DateTime.
+  DateTime get getDate =>
+      _date; // Returns a copy of DateTime with hour and minute.
 
   Image get getPhoto => copyImage(_photo); // Returns a copy of the Image.
 
-  // Assuming this is how you copy an Image object in your context.
+  // Create Image copy
   static Image copyImage(Image original) {
     return Image.from(original);
   }
