@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
           ],
           title: 'Flutter Platform Widgets',
           home: ChangeNotifierProvider(
-            create: (context) => StillsProvider(widget._storage),
+            create: (context) => StillsProvider(storage: widget._storage),
             child: const HomePage(),
           ),
         ),

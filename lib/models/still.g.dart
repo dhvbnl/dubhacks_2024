@@ -20,7 +20,7 @@ class StillAdapter extends TypeAdapter<Still> {
       id: fields[0] as String,
       prompt: fields[1] as String,
       date: fields[2] as DateTime,
-      photo: fields[3] as AssetImage,
+      path: fields[3] as String,
     );
   }
 
@@ -35,7 +35,7 @@ class StillAdapter extends TypeAdapter<Still> {
       ..writeByte(2)
       ..write(obj.date)
       ..writeByte(3)
-      ..write(obj.photo);
+      ..write(obj.path);
   }
 
   @override

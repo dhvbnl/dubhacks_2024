@@ -11,11 +11,11 @@ class History extends StatefulWidget {
   History({super.key}) {
     _stills.add(Still.create(
       prompt: 'Nature\'s Art',
-      photo: const AssetImage('assets/fish.jpg'),
+      path: 'assets/fish.jpg',
     ));
     _stills.add(Still.create(
       prompt: 'Lolsies',
-      photo: const AssetImage('assets/fish.jpg'),
+      path: 'assets/fish.jpg',
     ));
   }
 

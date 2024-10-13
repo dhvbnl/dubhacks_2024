@@ -72,17 +72,16 @@ class _CameraPageState extends State<CameraPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white, //change your color here
-        ),
-        title: Text(
-          'Camera',
-          style: TextStyle(
-            color: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
           ),
-          ), 
-        backgroundColor: Colors.black
-      ),
+          title: Text(
+            'Camera',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.black),
       // Display the camera preview
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
@@ -92,22 +91,20 @@ class _CameraPageState extends State<CameraPage> {
               child: AspectRatio(
                 aspectRatio: 1,
                 child: ClipRect(
-                child: OverflowBox(
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: _controller?.value.previewSize!.height,
-                      height: _controller?.value.previewSize!.width,
-                      child: CameraPreview(_controller!),
+                  child: OverflowBox(
+                    alignment: Alignment.center,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SizedBox(
+                        width: _controller?.value.previewSize!.height,
+                        height: _controller?.value.previewSize!.width,
+                        child: CameraPreview(_controller!),
+                      ),
                     ),
                   ),
                 ),
               ),
-              ),
             );
-           
-
           } else if (snapshot.hasError) {
             // If there's an error during initialization, display it.
             return Center(child: Text('Error: ${snapshot.error}'));

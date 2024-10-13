@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,25 +19,25 @@ class Still extends HiveObject {
   final DateTime date;
   // Image of the still.
   @HiveField(3)
-  final AssetImage photo;
+  final String path;
 
   // Constructor
   Still(
       {required this.id,
       required this.prompt,
       required this.date,
-      required this.photo});
+      required this.path});
 
   // Factory constructor
   factory Still.create({
     required String prompt,
-    required AssetImage photo,
+    required String path,
   }) {
     return Still(
       id: const Uuid().v4(),
       prompt: prompt,
       date: DateTime.now(),
-      photo: photo,
+      path: path,
     );
   }
 
@@ -47,5 +48,5 @@ class Still extends HiveObject {
   DateTime get getDate => date;
 
   // Returns the photo of the Still object.
-  AssetImage get getPhoto => photo; // Returns a copy of the Image.
+  String get getPhoto => path; // Returns a copy of the Image.
 }

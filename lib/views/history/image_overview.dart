@@ -37,7 +37,7 @@ class ImageOverview extends StatelessWidget {
           Card(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image(image: still.getPhoto),
+              child: Image(image: AssetImage(still.getPhoto)),
             ),
           ),
           const SizedBox(height: 10),
@@ -61,7 +61,7 @@ class ImageOverview extends StatelessWidget {
 
 Future<void> shareImage(Still still) async {
   try {
-    ByteData bytes = await rootBundle.load(still.getPhoto.assetName);
+    ByteData bytes = await rootBundle.load(still.getPhoto);
     final Directory tempDir = await getTemporaryDirectory();
     final String tempPath = '${tempDir.path}/image.jpg';
 
