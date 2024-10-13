@@ -8,15 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 class History extends StatefulWidget {
   final List<Still> _stills = [];
 
-  History({super.key}) {
-    _stills.add(Still.create(
-      prompt: 'Nature\'s Art',
-      path: 'assets/fish.jpg',
-    ));
-    _stills.add(Still.create(
-      prompt: 'Lolsies',
-      path: 'assets/fish.jpg',
-    ));
+  History({super.key, required List<Still> stills}) {
+    _stills.addAll(stills);
   }
 
   List<Still> get getStills => _stills;

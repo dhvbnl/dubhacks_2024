@@ -37,7 +37,7 @@ class ImageOverview extends StatelessWidget {
           Card(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image(image: AssetImage(still.getPhoto)),
+              child: _buildImageOrLoading(still.getPhoto),
             ),
           ),
           const SizedBox(height: 10),
@@ -57,6 +57,25 @@ class ImageOverview extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildImageOrLoading(String path) {
+  return FutureBuilder<Widget>(
+    future: _buildImage(path),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        return snapshot.data!;
+      } else {
+        return const CircularProgressIndicator();
+      }
+    },
+  );
+}
+
+Future<Widget> _buildImage(String path) async {
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  final File imageFile = File("${appDocDir.path}/$path");
+  return Image.file(imageFile);
 }
 
 Future<void> shareImage(Still still) async {

@@ -24,4 +24,6 @@ class StillsProvider extends ChangeNotifier {
     _storage.delete(still.id);
     notifyListeners();
   }
+
+  List<Still> get getStills => _stills;
 }

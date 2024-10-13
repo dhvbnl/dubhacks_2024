@@ -121,43 +121,48 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHistoryButton() {
-    return PlatformTextButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => History(),
+    return Consumer<StillsProvider>(
+      builder: (context, stillsProvider, child) {
+        return PlatformTextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    History(stills: stillsProvider.getStills),
+              ),
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                mainAxisSize:
+                    MainAxisSize.min, // Make the row take only the needed space
+                children: [
+                  const Icon(
+                    Icons.history, // You can choose any icon you like
+                    color: Colors.white,
+                    size: 30.0, // Adjust the size as needed
+                  ),
+                  const SizedBox(width: 10), // Spacing between icon and text
+                  Text(
+                    'History',
+                    style: GoogleFonts.raleway(
+                      fontSize: 25.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisSize:
-                MainAxisSize.min, // Make the row take only the needed space
-            children: [
-              const Icon(
-                Icons.history, // You can choose any icon you like
-                color: Colors.white,
-                size: 30.0, // Adjust the size as needed
-              ),
-              const SizedBox(width: 10), // Spacing between icon and text
-              Text(
-                'History',
-                style: GoogleFonts.raleway(
-                  fontSize: 25.0,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
