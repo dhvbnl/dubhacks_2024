@@ -1,9 +1,12 @@
+import 'package:dubhacks/models/still.dart';
+import 'package:dubhacks/providers/still_provider.dart';
 import 'package:dubhacks/views/camera.dart';
 import 'package:dubhacks/views/history/history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -81,35 +84,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCameraButton() {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: const BorderSide(color: Colors.white, width: 1.0),
-      ),
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(110.0),
-        child: PlatformIconButton(
-          icon: const Icon(
-            Icons.add_circle,
-            size: 100,
-            color: Colors.white,
-          ),
-          onPressed: () async {
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CameraPage()),
-            );
-            if (result != null) {
-              setState(() {
-                filepath = result;
-              });
-              print(result);
-            }
-          },
+    return Consumer<StillsProvider>(builder: (context, stillsProvider, child) {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: const BorderSide(color: Colors.white, width: 1.0),
         ),
-      ),
-    );
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.all(110.0),
+          child: PlatformIconButton(
+            icon: const Icon(
+              Icons.add_circle,
+              size: 100,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CameraPage()),
+              );
+              if (result != null) {
+                setState(() {
+                  filepath = result;
+                });
+                print(result);
+              }
+              stillsProvider.upsertStill(
+                Still.create(prompt: prompt, path: filepath),
+              );
+            },
+          ),
+        ),
+      );
+    });
   }
 
   Widget _buildHistoryButton() {
