@@ -1,14 +1,44 @@
+import 'dart:convert';
+
+import 'package:dubhacks/models/still.dart';
 import 'package:dubhacks/views/history/history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // sets up local storage
+  await Hive.initFlutter();
+  Hive.registerAdapter(StillAdapter());
+
+  // create a secure storage
+  const secureStorage = FlutterSecureStorage();
+
+  // takes key from secure storage, returns null if not found
+  var encryptionKey = await secureStorage.read(key: 'key');
+  if (encryptionKey == null) {
+    // generates if it does not exist
+    final key = Hive.generateSecureKey();
+    await secureStorage.write(key: 'key', value: base64UrlEncode(key));
+    encryptionKey = await secureStorage.read(key: 'key');
+  }
+  // decodes key
+  final decodedKey = base64Url.decode(encryptionKey!);
+  // gets box of Stills using cipher
+  Box<Still> encryptedBox = await Hive.openBox<Still>('Still Data Storage',
+      encryptionCipher: HiveAesCipher(decodedKey));
+
+  runApp(MyApp(storage: encryptedBox));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final Box<Still> _storage;
+
+  const MyApp({super.key, storage}) : _storage = storage;
 
   @override
   State<MyApp> createState() => _MyAppState();
