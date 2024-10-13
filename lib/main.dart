@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dubhacks/models/still.dart';
 import 'package:dubhacks/providers/still_provider.dart';
 import 'package:dubhacks/views/homepage/homepage.dart';
+import 'package:dubhacks/helpers/promptManager.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,19 @@ void main() async {
   Box<Still> encryptedBox = await Hive.openBox<Still>('Still Data Storage',
       encryptionCipher: HiveAesCipher(decodedKey));
 
-  runApp(MyApp(storage: encryptedBox));
+  final promptBox = await Hive.openBox<String>('Prompt Data Storage');
+  final promptManager = PromptManager(promptBox, []);
+
+  runApp(MyApp(storage: encryptedBox, promptManager: promptManager));
 }
 
 class MyApp extends StatefulWidget {
-  final Box<Still> _storage;
+  final Box<Still> storage;
+  final PromptManager promptManager;
 
-  const MyApp({super.key, storage}) : _storage = storage;
+  const MyApp({super.key, required this.storage, required this.promptManager});
+
+  PromptManager get getPromptManager => promptManager;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -91,7 +98,9 @@ class _MyAppState extends State<MyApp> {
         cupertinoDarkTheme: cupertinoDarkTheme,
         matchCupertinoSystemChromeBrightness: true,
         onThemeModeChanged: (themeMode) {
-          this.themeMode = themeMode; /* you can save to storage */
+          setState(() {
+            this.themeMode = themeMode; /* you can save to storage */
+          });
         },
         builder: (context) => PlatformApp(
           localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
@@ -101,12 +110,11 @@ class _MyAppState extends State<MyApp> {
           ],
           title: 'Flutter Platform Widgets',
           home: ChangeNotifierProvider(
-            create: (context) => StillsProvider(storage: widget._storage),
-            child: const HomePage(),
+            create: (context) => StillsProvider(storage: widget.storage),
+            child: HomePage(promptManager: widget.getPromptManager),
           ),
         ),
       ),
-      // ),
     );
   }
 }
