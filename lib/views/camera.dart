@@ -13,7 +13,6 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-   
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
   late List<CameraDescription> _cameras;
@@ -25,7 +24,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> _setupCameras() async {
-    try{
+    try {
       WidgetsFlutterBinding.ensureInitialized();
       final cameras = await availableCameras();
       final firstCamera = cameras.first;
@@ -47,7 +46,7 @@ class _CameraPageState extends State<CameraPage> {
     try {
       await _initializeControllerFuture;
 
-      final Directory appDocDir = await getApplicationDocumentsDirectory(); 
+      final Directory appDocDir = await getApplicationDocumentsDirectory();
       final String imagePath = join(
         appDocDir.path,
         '${DateTime.now().millisecondsSinceEpoch}.png',
@@ -87,7 +86,7 @@ class _CameraPageState extends State<CameraPage> {
           }
         },
       ),
-      
+
       floatingActionButton: FloatingActionButton(
         onPressed: _takePicture,
         child: Icon(Icons.camera_alt),
