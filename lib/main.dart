@@ -1,11 +1,8 @@
-import 'package:dubhacks/views/camera.dart';
-
 import 'dart:convert';
 
 import 'package:dubhacks/models/still.dart';
-
-import 'package:dubhacks/views/history/history.dart';
 import 'package:dubhacks/views/homepage/homepage.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -94,8 +91,8 @@ class _MyAppState extends State<MyApp> {
         onThemeModeChanged: (themeMode) {
           this.themeMode = themeMode; /* you can save to storage */
         },
-        builder: (context) => PlatformApp(
-          localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        builder: (context) => const PlatformApp(
+          localizationsDelegates: <LocalizationsDelegate<dynamic>>[
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,
