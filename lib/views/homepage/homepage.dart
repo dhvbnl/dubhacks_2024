@@ -102,6 +102,10 @@ class _HomePageState extends State<HomePage> {
           if (result != null) {
             setState(() {
               filepath = result;
+              stillsProvider.upsertStill(Still.create(
+                prompt: prompt,
+                path: filepath,
+              ));
             });
             print(result);
           }

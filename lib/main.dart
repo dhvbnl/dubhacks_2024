@@ -7,6 +7,7 @@ import 'package:dubhacks/helpers/promptManager.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -39,7 +40,9 @@ void main() async {
   final promptBox = await Hive.openBox<String>('Prompt Data Storage');
   final promptManager = PromptManager(promptBox, []);
 
-  runApp(MyApp(storage: encryptedBox, promptManager: promptManager));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+      (value) =>
+          runApp((MyApp(storage: encryptedBox, promptManager: promptManager))));
 }
 
 class MyApp extends StatefulWidget {

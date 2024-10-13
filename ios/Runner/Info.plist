@@ -4,7 +4,6 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Using the library for ...</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -49,8 +48,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	
 </dict>
 </plist>
