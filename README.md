@@ -20,8 +20,6 @@ The app is being developed for a hackathon under the health and wellness track, 
     - History Page
     - Data Storage
 7. [Future Enhancements](#future-enhancements)
-8. [Contributing](#contributing)
-9. [License](#license)
 
 ---
 
@@ -81,7 +79,7 @@ The app is being developed for a hackathon under the health and wellness track, 
 
 2. **Navigate to the project directory**:
    ```bash
-   cd stills-app
+   cd dubhacks_2024
    ```
 
 3. **Install dependencies**:
@@ -149,6 +147,5 @@ The `main.dart` file is the entry point of the app. It:
 - **Enhanced History Page**: Allow users to browse through their photo history with a better UI and additional functionality like filtering photos by prompt or date.
 - **Cloud Syncing**: Provide an option to sync photos to cloud storage for backup.
 - **Notification System**: Remind users to take a daily photo based on the prompt.
-- **Customization of Prompts**: Allow users to set their own prompts or choose from a larger pool of predefined prompts.
 
 ---

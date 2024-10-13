@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dubhacks/models/still.dart';
 import 'package:dubhacks/providers/still_provider.dart';
 import 'package:dubhacks/views/homepage/homepage.dart';
-import 'package:dubhacks/helpers/promptManager.dart';
+import 'package:dubhacks/helpers/prompt_manager.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

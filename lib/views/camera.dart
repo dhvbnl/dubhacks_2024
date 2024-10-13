@@ -30,9 +30,7 @@ class _CameraPageState extends State<CameraPage> {
       _controller = CameraController(firstCamera, ResolutionPreset.high);
       _initializeControllerFuture = _controller!.initialize();
       setState(() {});
-    } catch (e) {
-      print("error initializing camera: $e");
-    }
+    } catch (e) {}
   }
 
   @override
@@ -52,9 +50,7 @@ class _CameraPageState extends State<CameraPage> {
       XFile picture = await _controller!.takePicture();
       await picture.saveTo(imagePath);
       Navigator.pop(context, imageID);
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dubhacks/helpers/promptManager.dart';
+import 'package:dubhacks/helpers/prompt_manager.dart';
 import 'package:dubhacks/models/still.dart';
 import 'package:dubhacks/providers/still_provider.dart';
 import 'package:dubhacks/views/camera.dart';
@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   var prompt = "";
   String filepath = 'null';
 
+  @override
   Widget build(BuildContext context) {
     prompt = widget.getPromptManager.getPrompt();
 
@@ -113,7 +114,6 @@ class _HomePageState extends State<HomePage> {
                   path: filepath,
                 ));
               });
-              print(result);
             }
           },
           padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 10.0),

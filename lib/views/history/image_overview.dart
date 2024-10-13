@@ -104,7 +104,5 @@ Future<void> shareImage(Still still) async {
       text:
           "'${still.getPrompt}', ${still.getDate.month}.${still.getDate.day}.${still.getDate.year}",
     );
-  } catch (e) {
-    print('Error sharing image: $e');
-  }
+  } catch (e) {}
 }
