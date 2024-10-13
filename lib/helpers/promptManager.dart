@@ -11,13 +11,20 @@ class PromptManager {
 
   // set the unused prompts
   PromptManager(this._box, this.prompts) {
-    var prompt = _box.get('unusedPrompts');
-    if (prompt != null) {
-      unusedPrompts = prompt;
-    } else {
-      unusedPrompts = prompts.toList();
-    }
+    var storedPrompts = _box.get('unusedPrompts');
     prompts.addAll(allPrompts);
+
+    // Debug: print type of storedPrompts to catch issues
+
+    // If storedPrompts exists
+    if (storedPrompts != null) {
+      unusedPrompts = List<String>.from(storedPrompts);
+    } else {
+      // If nothing exists in Hive, initialize unusedPrompts with all prompts
+      unusedPrompts = prompts;
+      _box.put('unusedPrompts',
+          unusedPrompts.toString()); // Store it safely as a list
+    }
   }
 
   String getPrompt() {
@@ -42,7 +49,7 @@ class PromptManager {
 
     // save the prompt for today
     _box.put(todaykey, prompt);
-    _box.put('unusedPrompts', unusedPrompts);
+    _box.put('unusedPrompts', unusedPrompts.toString());
 
     return prompt;
   }
