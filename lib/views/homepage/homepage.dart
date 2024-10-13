@@ -13,9 +13,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String prompt = "a pop of red";
-
   @override
+  String prompt = "a pop of red";
+  String filepath = 'null';
+
   Widget build(BuildContext context) {
     return PlatformScaffold(
       backgroundColor: Colors.black,
@@ -94,13 +95,17 @@ class _HomePageState extends State<HomePage> {
             size: 100,
             color: Colors.white,
           ),
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final result = await Navigator.push(
               context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => const CameraPage(),
-              ),
+              MaterialPageRoute(builder: (context) => CameraPage()),
             );
+            if (result != null) {
+              setState(() {
+                filepath = result;
+              });
+              print(result);
+            }
           },
         ),
       ),

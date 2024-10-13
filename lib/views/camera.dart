@@ -55,11 +55,10 @@ class _CameraPageState extends State<CameraPage> {
       XFile picture = await _controller!.takePicture();
       await picture.saveTo(imagePath);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Picture saved to $imagePath')),
-      );
+      print('$imagePath');
+      print('bello');
 
-      Navigator.pop(context, {});
+      Navigator.pop(context, imagePath);
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -71,14 +70,44 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Camera')),
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        title: Text(
+          'Camera',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          ), 
+        backgroundColor: Colors.black
+      ),
       // Display the camera preview
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller!);
+            return Center(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRect(
+                child: OverflowBox(
+                  alignment: Alignment.center,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: _controller?.value.previewSize!.height,
+                      height: _controller?.value.previewSize!.width,
+                      child: CameraPreview(_controller!),
+                    ),
+                  ),
+                ),
+              ),
+              ),
+            );
+           
+
           } else if (snapshot.hasError) {
             // If there's an error during initialization, display it.
             return Center(child: Text('Error: ${snapshot.error}'));
