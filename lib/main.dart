@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dubhacks/models/still.dart';
+import 'package:dubhacks/providers/still_provider.dart';
 import 'package:dubhacks/views/homepage/homepage.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -91,14 +93,17 @@ class _MyAppState extends State<MyApp> {
         onThemeModeChanged: (themeMode) {
           this.themeMode = themeMode; /* you can save to storage */
         },
-        builder: (context) => const PlatformApp(
-          localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+        builder: (context) => PlatformApp(
+          localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
             DefaultCupertinoLocalizations.delegate,
           ],
           title: 'Flutter Platform Widgets',
-          home: HomePage(),
+          home: ChangeNotifierProvider(
+            create: (context) => StillsProvider(widget._storage),
+            child: const HomePage(),
+          ),
         ),
       ),
       // ),
