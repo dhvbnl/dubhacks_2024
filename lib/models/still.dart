@@ -1,20 +1,52 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:uuid/uuid.dart';
 
-class Still {
-  final String _prompt;
-  final DateTime _date;
-  final AssetImage _photo;
+part 'still.g.dart';
 
-  Still(String prompt, AssetImage photo)
-      : _prompt = prompt,
-        _date = DateTime.now(),
-        _photo =
-            photo; // Assuming copyImage is a function that returns a copy of the Image.
+// Still is a class that represents a still image with a prompt and a date.
+@HiveType(typeId: 0)
+class Still extends HiveObject {
+  // Unique identifier for the still.
+  @HiveField(0)
+  String id;
+  // String which describes image prompt.
+  @HiveField(1)
+  final String prompt;
+  // Time when photo was taken.
+  @HiveField(2)
+  final DateTime date;
+  // Image of the still.
+  @HiveField(3)
+  final AssetImage photo;
 
-  String get getPrompt => _prompt;
+  // Constructor
+  Still(
+      {required this.id,
+      required this.prompt,
+      required this.date,
+      required this.photo});
 
-  DateTime get getDate =>
-      _date; // Returns a copy of DateTime with hour and minute.
+  // Factory constructor
+  factory Still.create({
+    required String prompt,
+    required AssetImage photo,
+  }) {
+    return Still(
+      id: const Uuid().v4(),
+      prompt: prompt,
+      date: DateTime.now(),
+      photo: photo,
+    );
+  }
 
-  AssetImage get getPhoto => _photo; // Returns a copy of the Image.
+  // Returns the prompt of the Still object.
+  String get getPrompt => prompt;
+
+  // Returns the date of the Still object.
+  DateTime get getDate => date;
+
+  // Returns the photo of the Still object.
+  AssetImage get getPhoto => photo; // Returns a copy of the Image.
 }
