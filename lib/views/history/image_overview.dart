@@ -18,7 +18,7 @@ class ImageOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     var date = still.getDate;
     return Padding(
-      padding: const EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 10),
       child: Column(
         children: [
           Row(
@@ -64,7 +64,12 @@ Widget _buildImageOrLoading(String path) {
     future: _buildImage(path),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
-        return snapshot.data!;
+        return ClipRect(
+          child: AspectRatio(
+            aspectRatio: 3 / 4,
+            child: snapshot.data!,
+          ),
+        );
       } else {
         return const CircularProgressIndicator();
       }
@@ -76,6 +81,8 @@ Future<Widget> _buildImage(String path) async {
   String imagePath = await tempPath(path);
   return Image.file(
     File(imagePath),
+    fit: BoxFit
+        .cover, // This will cover the entire area while maintaining the aspect ratio
   );
 }
 

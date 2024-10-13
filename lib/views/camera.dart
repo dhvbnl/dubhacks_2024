@@ -69,7 +69,8 @@ class _CameraPageState extends State<CameraPage> {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, right: 15.0, bottom: 10.0),
                   child: AspectRatio(
                     aspectRatio: 3.0 / 4.0,
                     child: ClipRRect(
@@ -91,25 +92,24 @@ class _CameraPageState extends State<CameraPage> {
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: PlatformTextButton(
-                      onPressed: () {
-                        _takePicture();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(
-                              25.0), // Optional: rounded corners
-                          border: Border.all(color: Colors.white),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                            size: 40.0,
-                          ),
+                  child: PlatformTextButton(
+                    onPressed: () {
+                      _takePicture();
+                    },
+                    padding: const EdgeInsets.only(
+                        left: 15.0, right: 15.0, top: 10.0, bottom: 40.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(
+                            25.0), // Optional: rounded corners
+                        border: Border.all(color: Colors.white),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 40.0,
                         ),
                       ),
                     ),

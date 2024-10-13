@@ -53,7 +53,7 @@ class _HistoryState extends State<History> {
                   });
                 },
               ),
-            ), // Optional: Add some spacing between PageView and buttons
+            ),
             // Button row below the PageView
             _buildButtonRow(stills),
           ],

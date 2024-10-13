@@ -54,7 +54,6 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBody() {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildPromptSection(),
           _buildCameraButton(),
@@ -98,42 +97,38 @@ class _HomePageState extends State<HomePage> {
     return Consumer<StillsProvider>(builder: (context, stillsProvider, child) {
       return Expanded(
         flex: 3,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: PlatformTextButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                Platform.isIOS
-                    ? CupertinoPageRoute(
-                        builder: (context) => const CameraPage())
-                    : MaterialPageRoute(
-                        builder: (context) => const CameraPage()),
-              );
-              if (result != null) {
-                setState(() {
-                  filepath = result;
-                  stillsProvider.upsertStill(Still.create(
-                    prompt: prompt,
-                    path: filepath,
-                  ));
-                });
-                print(result);
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius:
-                    BorderRadius.circular(25.0), // Optional: rounded corners
-                border: Border.all(color: Colors.white),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                  size: 40.0,
-                ),
+        child: PlatformTextButton(
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              Platform.isIOS
+                  ? CupertinoPageRoute(builder: (context) => const CameraPage())
+                  : MaterialPageRoute(builder: (context) => const CameraPage()),
+            );
+            if (result != null) {
+              setState(() {
+                filepath = result;
+                stillsProvider.upsertStill(Still.create(
+                  prompt: prompt,
+                  path: filepath,
+                ));
+              });
+              print(result);
+            }
+          },
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 10.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius:
+                  BorderRadius.circular(25.0), // Optional: rounded corners
+              border: Border.all(color: Colors.white),
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+                size: 40.0,
               ),
             ),
           ),
@@ -146,55 +141,53 @@ class _HomePageState extends State<HomePage> {
     return Consumer<StillsProvider>(
       builder: (context, stillsProvider, child) {
         return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 40.0),
-            child: PlatformTextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  Platform.isIOS
-                      ? CupertinoPageRoute(
-                          builder: (context) =>
-                              History(stills: stillsProvider.getStills),
-                        )
-                      : MaterialPageRoute(
-                          builder: (context) =>
-                              History(stills: stillsProvider.getStills),
-                        ),
-                );
-              },
-              child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(
-                        25.0), // Optional: rounded corners
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize
-                        .min, // Make the row take only the needed space
-                    children: [
-                      const Spacer(),
-                      const Icon(
-                        Icons.history, // You can choose any icon you like
+          child: PlatformTextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                Platform.isIOS
+                    ? CupertinoPageRoute(
+                        builder: (context) =>
+                            History(stills: stillsProvider.getStills),
+                      )
+                    : MaterialPageRoute(
+                        builder: (context) =>
+                            History(stills: stillsProvider.getStills),
+                      ),
+              );
+            },
+            padding: const EdgeInsets.only(
+                left: 15.0, right: 15.0, top: 10.0, bottom: 40.0),
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius:
+                      BorderRadius.circular(25.0), // Optional: rounded corners
+                  border: Border.all(color: Colors.white),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize
+                      .min, // Make the row take only the needed space
+                  children: [
+                    const Spacer(),
+                    const Icon(
+                      Icons.history, // You can choose any icon you like
+                      color: Colors.white,
+                      size: 30.0, // Adjust the size as needed
+                    ),
+                    const SizedBox(width: 10), // Spacing between icon and text
+                    Text(
+                      'History',
+                      style: GoogleFonts.raleway(
+                        fontSize: 25.0,
                         color: Colors.white,
-                        size: 30.0, // Adjust the size as needed
                       ),
-                      const SizedBox(
-                          width: 10), // Spacing between icon and text
-                      Text(
-                        'History',
-                        style: GoogleFonts.raleway(
-                          fontSize: 25.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Spacer(),
-                    ],
-                  )),
-            ),
+                    ),
+                    const Spacer(),
+                  ],
+                )),
           ),
         );
       },
