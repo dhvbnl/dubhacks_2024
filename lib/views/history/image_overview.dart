@@ -23,15 +23,14 @@ class ImageOverview extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
-                child: PlatformText(
-                  still.getPrompt,
-                  style: GoogleFonts.raleway(
-                    fontSize: imageDescriptorSize,
-                    color: Colors.white,
-                  ),
+              PlatformText(
+                still.getPrompt,
+                style: GoogleFonts.raleway(
+                  fontSize: imageDescriptorSize,
+                  color: Colors.white,
                 ),
               ),
+              const Spacer(),
             ],
           ),
           const SizedBox(height: 10),

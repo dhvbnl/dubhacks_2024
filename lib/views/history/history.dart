@@ -49,7 +49,7 @@ class _HistoryState extends State<History> {
             // Constrain the height of the PageView
             SizedBox(
               height: MediaQuery.of(context).size.width *
-                  1.195, // Adjust this value as needed
+                  1.25, // Adjust this value as needed
               child: PageView.builder(
                 controller: _pageController,
                 itemCount: stills.length,
