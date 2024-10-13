@@ -1,4 +1,3 @@
-
 import 'package:dubhacks/views/camera.dart';
 
 import 'dart:convert';
@@ -23,10 +22,6 @@ void main() async {
   // create a secure storage
   const secureStorage = FlutterSecureStorage();
 
-
-
-void main() {
-
   // takes key from secure storage, returns null if not found
   var encryptionKey = await secureStorage.read(key: 'key');
   if (encryptionKey == null) {
@@ -42,7 +37,6 @@ void main() {
       encryptionCipher: HiveAesCipher(decodedKey));
 
   runApp(MyApp(storage: encryptedBox));
-
 }
 
 class MyApp extends StatefulWidget {
