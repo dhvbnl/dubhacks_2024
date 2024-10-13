@@ -1,3 +1,4 @@
+import 'package:dubhacks/views/camera.dart';
 import 'package:dubhacks/views/history/history.dart';
 import 'package:dubhacks/views/homepage/homepage.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,7 +70,7 @@ class _MyAppState extends State<MyApp> {
             DefaultCupertinoLocalizations.delegate,
           ],
           title: 'Flutter Platform Widgets',
-          home: HomePage(),
+          home: CameraPage(),
         ),
       ),
       // ),
