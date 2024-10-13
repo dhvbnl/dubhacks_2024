@@ -1,3 +1,4 @@
+import 'package:dubhacks/helpers/promptManager.dart';
 import 'package:dubhacks/models/still.dart';
 import 'package:dubhacks/providers/still_provider.dart';
 import 'package:dubhacks/views/camera.dart';
@@ -9,18 +10,23 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final PromptManager promptManager;
+
+  const HomePage({super.key, required this.promptManager});
+
+  PromptManager get getPromptManager => promptManager;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  String prompt = "a pop of red";
-  String filepath = '';
+  var prompt = "";
+  String filepath = 'null';
 
   Widget build(BuildContext context) {
+    prompt = widget.getPromptManager.getPrompt();
+
     return PlatformScaffold(
       backgroundColor: Colors.black,
       appBar: _buildAppBar(),
@@ -86,7 +92,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCameraButton() {
-     return Consumer<StillsProvider>(builder: (context, stillsProvider, child) {
+    return Consumer<StillsProvider>(builder: (context, stillsProvider, child) {
       return GestureDetector(
         onTap: () async {
           final result = await Navigator.push(
@@ -116,9 +122,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       );
-     });
+    });
   }
-
 
   Widget _buildHistoryButton() {
     return Consumer<StillsProvider>(
