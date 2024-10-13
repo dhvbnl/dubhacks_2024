@@ -15,7 +15,6 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
-  late List<CameraDescription> _cameras;
 
   @override
   void initState() {
@@ -60,95 +59,74 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        title: Text(
-          'Camera',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          ), 
-        backgroundColor: Colors.black
-      ),
-      // Display the camera preview
+      appBar: PlatformAppBar(backgroundColor: Colors.black),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Column(
-              children: [Padding(
-                padding: const EdgeInsets.all(10.0),
-                
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: AspectRatio(
-                    aspectRatio: 3.0/4.0,
+                    aspectRatio: 3.0 / 4.0,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
+                      borderRadius: BorderRadius.circular(25.0),
                       child: ClipRect(
-                      child: OverflowBox(
-                        alignment: Alignment.center,
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: SizedBox(
-                            width: _controller?.value.previewSize!.height,
-                            height: _controller?.value.previewSize!.width,
-                            child: CameraPreview(_controller!),
+                        child: OverflowBox(
+                          alignment: Alignment.center,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: SizedBox(
+                              width: _controller?.value.previewSize!.height,
+                              height: _controller?.value.previewSize!.width,
+                              child: CameraPreview(_controller!),
+                            ),
                           ),
                         ),
                       ),
-                                    ),
                     ),
                   ),
-                
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: PlatformTextButton(
-              onPressed: () {
-                _takePicture();
-              },
-              child: Container(
-                width: 80, // Set the width and height to create a square button
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.black, // Button background color
-                  shape: BoxShape.circle, // Make the button circular
-                  border: Border.all(color: Colors.white),
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                    size: 40.0, // Adjust the size as needed
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: PlatformTextButton(
+                      onPressed: () {
+                        _takePicture();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(
+                              25.0), // Optional: rounded corners
+                          border: Border.all(color: Colors.white),
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                            size: 40.0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-              ),
-              SizedBox(height: 5.0,)]
+              ],
             );
-           
-
           } else if (snapshot.hasError) {
-            // If there's an error during initialization, display it.
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            // Otherwise, display a loading indicator.
-            return SpinKitCircle(
+            return const SpinKitCircle(
               color: Colors.white,
               duration: Duration(milliseconds: 200),
             );
           }
         },
       ),
-
     );
   }
 }

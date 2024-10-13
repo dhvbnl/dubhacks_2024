@@ -58,53 +58,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode? themeMode = ThemeMode.light; // initial brightness
+  ThemeData mTheme = ThemeData.from(
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromRGBO(255, 255, 255, 1)));
 
+  final cupertinoTheme = const CupertinoThemeData(
+      primaryColor: Color.fromARGB(255, 255, 255, 255),
+      barBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+      scaffoldBackgroundColor: Colors.white);
   @override
   Widget build(BuildContext context) {
-    final materialLightTheme = ThemeData.light();
-    final materialDarkTheme = ThemeData.dark();
-
-    const darkDefaultCupertinoTheme =
-        CupertinoThemeData(brightness: Brightness.dark);
-    final cupertinoDarkTheme = MaterialBasedCupertinoThemeData(
-      materialTheme: materialDarkTheme.copyWith(
-        cupertinoOverrideTheme: CupertinoThemeData(
-          brightness: Brightness.dark,
-          barBackgroundColor: darkDefaultCupertinoTheme.barBackgroundColor,
-          textTheme: CupertinoTextThemeData(
-            primaryColor: Colors.white,
-            navActionTextStyle:
-                darkDefaultCupertinoTheme.textTheme.navActionTextStyle.copyWith(
-              color: const Color(0xF0F9F9F9),
-            ),
-            navLargeTitleTextStyle: darkDefaultCupertinoTheme
-                .textTheme.navLargeTitleTextStyle
-                .copyWith(color: const Color(0xF0F9F9F9)),
-          ),
-        ),
-      ),
-    );
-    final cupertinoLightTheme =
-        MaterialBasedCupertinoThemeData(materialTheme: materialLightTheme);
-
     return PlatformProvider(
       settings: PlatformSettingsData(
-        iosUsesMaterialWidgets: true,
-        iosUseZeroPaddingForAppbarPlatformIcon: true,
+        iosUsesMaterialWidgets: false,
+        iosUseZeroPaddingForAppbarPlatformIcon: false,
       ),
       builder: (context) => PlatformTheme(
-        themeMode: themeMode,
-        materialLightTheme: materialLightTheme,
-        materialDarkTheme: materialDarkTheme,
-        cupertinoLightTheme: cupertinoLightTheme,
-        cupertinoDarkTheme: cupertinoDarkTheme,
-        matchCupertinoSystemChromeBrightness: true,
-        onThemeModeChanged: (themeMode) {
-          setState(() {
-            this.themeMode = themeMode; /* you can save to storage */
-          });
-        },
+        materialLightTheme: mTheme,
+        materialDarkTheme: mTheme,
+        cupertinoLightTheme: cupertinoTheme,
+        cupertinoDarkTheme: cupertinoTheme,
         builder: (context) => PlatformApp(
           localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
             DefaultMaterialLocalizations.delegate,
