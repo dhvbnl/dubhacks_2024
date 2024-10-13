@@ -24,7 +24,8 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    final stills = widget.getStills.reversed.toList();
+    final stills = widget.getStills;
+    stills.sort((a, b) => b.getDate.compareTo(a.getDate));
 
     return PlatformScaffold(
         backgroundColor: Colors.black,
