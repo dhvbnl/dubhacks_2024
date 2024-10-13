@@ -72,7 +72,22 @@ class _CameraPageState extends State<CameraPage> {
     return Scaffold(
       appBar: AppBar(title: Text('Camera')),
       // Display the camera preview
-      body: CameraPreview(_controller!),
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If the Future is complete, display the preview.
+            return CameraPreview(_controller!);
+          } else if (snapshot.hasError) {
+            // If there's an error during initialization, display it.
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            // Otherwise, display a loading indicator.
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      
       floatingActionButton: FloatingActionButton(
         onPressed: _takePicture,
         child: Icon(Icons.camera_alt),
