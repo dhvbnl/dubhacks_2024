@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
             DefaultCupertinoLocalizations.delegate,
           ],
           title: 'Flutter Platform Widgets',
-          home: CameraPage(),
+          home: HomePage(),
         ),
       ),
       // ),

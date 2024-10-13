@@ -58,6 +58,8 @@ class _CameraPageState extends State<CameraPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Picture saved to $imagePath')),
       );
+
+      Navigator.pop(context, {});
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(

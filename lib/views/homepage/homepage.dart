@@ -1,3 +1,5 @@
+import 'package:dubhacks/views/camera.dart';
+import 'package:dubhacks/views/history/history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -60,13 +62,24 @@ class _HomePageState extends State<HomePage> {
                   Icons.camera_alt_rounded,
                   size: 100,
                   color: Colors.white,
-                )
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (BuildContext context) {
+                      return CameraPage();
+                    },
+                  ));
+                },
               ),
               SizedBox(height: 60,),
           
               PlatformTextButton(
                 onPressed: () {
-                  print("hello");
+                  Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (BuildContext context) {
+                      return History();
+                    },
+                  ));
                 },
                 color: Colors.white,
                 child: const Text(
