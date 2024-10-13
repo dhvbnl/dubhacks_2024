@@ -18,7 +18,7 @@ class ImageOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     var date = still.getDate;
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 10),
       child: Column(
         children: [
           Row(
@@ -33,14 +33,14 @@ class ImageOverview extends StatelessWidget {
               const Spacer(),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           Card(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: _buildImageOrLoading(still.getPhoto),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           Row(
             children: [
               const Spacer(),
@@ -73,22 +73,27 @@ Widget _buildImageOrLoading(String path) {
 }
 
 Future<Widget> _buildImage(String path) async {
+  String imagePath = await tempPath(path);
+  return Image.file(
+    File(imagePath),
+  );
+}
+
+Future<String> tempPath(String path) async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
-  final File imageFile = File("${appDocDir.path}/$path");
-  return Image.file(imageFile);
+  return "${appDocDir.path}/$path";
 }
 
 Future<void> shareImage(Still still) async {
   try {
-    ByteData bytes = await rootBundle.load(still.getPhoto);
-    final Directory tempDir = await getTemporaryDirectory();
-    final String tempPath = '${tempDir.path}/image.jpg';
+    String path = await tempPath(still.getPhoto);
+    ByteData bytes = await rootBundle.load(path);
+    File tempFile = File(path);
 
-    File tempFile = File(tempPath);
     await tempFile.writeAsBytes(bytes.buffer.asUint8List());
 
     await Share.shareXFiles(
-      [XFile(tempPath)],
+      [XFile(path)],
       text:
           "'${still.getPrompt}', ${still.getDate.month}.${still.getDate.day}.${still.getDate.year}",
     );

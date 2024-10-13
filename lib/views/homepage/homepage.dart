@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   String prompt = "a pop of red";
-  String filepath = 'null';
+  String filepath = '';
 
   Widget build(BuildContext context) {
     return PlatformScaffold(
@@ -110,9 +110,11 @@ class _HomePageState extends State<HomePage> {
                 });
                 print(result);
               }
-              stillsProvider.upsertStill(
-                Still.create(prompt: prompt, path: filepath),
-              );
+              if (filepath != '') {
+                stillsProvider.upsertStill(
+                  Still.create(prompt: prompt, path: filepath),
+                );
+              }
             },
           ),
         ),

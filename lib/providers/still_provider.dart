@@ -14,8 +14,10 @@ class StillsProvider extends ChangeNotifier {
         _stills = List.from(storage.values);
 
   upsertStill(Still still) {
-    _stills.add(still);
-    _storage.put(still.id, still);
+    if (still.id != '') {
+      _stills.add(still);
+      _storage.put(still.id, still);
+    }
     notifyListeners();
   }
 

@@ -24,7 +24,7 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    final stills = widget.getStills;
+    final stills = widget.getStills.reversed.toList();
 
     return PlatformScaffold(
         backgroundColor: Colors.black,
@@ -40,9 +40,7 @@ class _HistoryState extends State<History> {
               .min, // Ensures the column takes up minimal vertical space
           children: [
             // Constrain the height of the PageView
-            SizedBox(
-              height: MediaQuery.of(context).size.width *
-                  1.25, // Adjust this value as needed
+            Expanded(
               child: PageView.builder(
                 controller: _pageController,
                 itemCount: stills.length,
@@ -63,19 +61,25 @@ class _HistoryState extends State<History> {
 
   Widget _buildButtonRow(List<Still> stills) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           _buildIconButton(
             icon: Icons.share,
-            onPressed: () => shareImage(stills[currentPage]),
+            onPressed: () {
+              if (stills.isNotEmpty) {
+                shareImage(stills[currentPage]);
+              }
+            },
           ),
           _buildIconButton(
             icon: Icons.shuffle,
             onPressed: () {
-              final randomPage = Random().nextInt(stills.length);
-              _pageController.jumpToPage(randomPage);
+              if (stills.isNotEmpty) {
+                final randomPage = Random().nextInt(stills.length);
+                _pageController.jumpToPage(randomPage);
+              }
             },
           ),
         ],
