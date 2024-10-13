@@ -34,38 +34,43 @@ class _HistoryState extends State<History> {
     final stills = widget.getStills;
 
     return PlatformScaffold(
-      backgroundColor: Colors.black,
-      appBar: PlatformAppBar(
-        title: PlatformText(
-          'Your History',
-          style: GoogleFonts.raleway(color: Colors.white, fontSize: 40),
-        ),
         backgroundColor: Colors.black,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: stills.length,
-              itemBuilder: (context, index) =>
-                  ImageOverview(still: stills[index]),
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
-            ),
+        appBar: PlatformAppBar(
+          title: PlatformText(
+            'Your History',
+            style: GoogleFonts.raleway(color: Colors.white, fontSize: 40),
           ),
-          _buildButtonRow(stills),
-        ],
-      ),
-    );
+          backgroundColor: Colors.black,
+        ),
+        body: Column(
+          mainAxisSize: MainAxisSize
+              .min, // Ensures the column takes up minimal vertical space
+          children: [
+            // Constrain the height of the PageView
+            SizedBox(
+              height: MediaQuery.of(context).size.width *
+                  1.195, // Adjust this value as needed
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: stills.length,
+                itemBuilder: (context, index) =>
+                    ImageOverview(still: stills[index]),
+                onPageChanged: (value) {
+                  setState(() {
+                    currentPage = value;
+                  });
+                },
+              ),
+            ), // Optional: Add some spacing between PageView and buttons
+            // Button row below the PageView
+            _buildButtonRow(stills),
+          ],
+        ));
   }
 
   Widget _buildButtonRow(List<Still> stills) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -73,7 +78,6 @@ class _HistoryState extends State<History> {
             icon: Icons.share,
             onPressed: () => shareImage(stills[currentPage]),
           ),
-          const SizedBox(width: 20), // Spacing between buttons
           _buildIconButton(
             icon: Icons.shuffle,
             onPressed: () {
@@ -92,13 +96,10 @@ class _HistoryState extends State<History> {
   }) {
     return PlatformTextButton(
       onPressed: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Icon(
-          icon,
-          color: Colors.white,
-          size: 30, // Adjust icon size as needed
-        ),
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: 30, // Adjust icon size as needed
       ),
     );
   }
