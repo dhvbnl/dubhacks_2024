@@ -1,7 +1,12 @@
+
+import 'package:dubhacks/views/camera.dart';
+
 import 'dart:convert';
 
 import 'package:dubhacks/models/still.dart';
+
 import 'package:dubhacks/views/history/history.dart';
+import 'package:dubhacks/views/homepage/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -18,6 +23,10 @@ void main() async {
   // create a secure storage
   const secureStorage = FlutterSecureStorage();
 
+
+
+void main() {
+
   // takes key from secure storage, returns null if not found
   var encryptionKey = await secureStorage.read(key: 'key');
   if (encryptionKey == null) {
@@ -33,6 +42,7 @@ void main() async {
       encryptionCipher: HiveAesCipher(decodedKey));
 
   runApp(MyApp(storage: encryptedBox));
+
 }
 
 class MyApp extends StatefulWidget {
@@ -97,7 +107,7 @@ class _MyAppState extends State<MyApp> {
             DefaultCupertinoLocalizations.delegate,
           ],
           title: 'Flutter Platform Widgets',
-          home: History(),
+          home: CameraPage(),
         ),
       ),
       // ),
