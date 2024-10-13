@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -52,9 +53,7 @@ class _CameraPageState extends State<CameraPage> {
       await picture.saveTo(imagePath);
       Navigator.pop(context, imageID);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to take picture: $e')),
-      );
+      print(e);
     }
   }
 
@@ -78,37 +77,49 @@ class _CameraPageState extends State<CameraPage> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Center(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: ClipRect(
-                  child: OverflowBox(
-                    alignment: Alignment.center,
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: _controller?.value.previewSize!.height,
-                        height: _controller?.value.previewSize!.width,
-                        child: CameraPreview(_controller!),
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              
+                child: AspectRatio(
+                  aspectRatio: 3.0/4.0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: ClipRect(
+                    child: OverflowBox(
+                      alignment: Alignment.center,
+                      child: FittedBox(
+                        fit: BoxFit.cover,
+                        child: SizedBox(
+                          width: _controller?.value.previewSize!.height,
+                          height: _controller?.value.previewSize!.width,
+                          child: CameraPreview(_controller!),
+                        ),
                       ),
                     ),
+                                  ),
                   ),
                 ),
-              ),
+              
             );
           } else if (snapshot.hasError) {
             // If there's an error during initialization, display it.
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             // Otherwise, display a loading indicator.
-            return Center(child: CircularProgressIndicator());
+            return SpinKitCircle(
+              color: Colors.white,
+              duration: Duration(milliseconds: 200),
+            );
           }
         },
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _takePicture,
-        child: Icon(Icons.camera_alt),
+      floatingActionButton: Expanded(
+        child: FloatingActionButton(
+          onPressed: _takePicture,
+          child: Icon(Icons.camera_alt),
+          backgroundColor: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
