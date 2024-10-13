@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' show join;
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -47,20 +45,13 @@ class _CameraPageState extends State<CameraPage> {
       await _initializeControllerFuture;
 
       final Directory appDocDir = await getApplicationDocumentsDirectory();
-      final String imagePath = join(
-        appDocDir.path,
-        '${DateTime.now().millisecondsSinceEpoch}.png',
-      );
+      final String imageID = '${DateTime.now().millisecondsSinceEpoch}.png';
+      final String imagePath = '${appDocDir.path}/$imageID';
 
       XFile picture = await _controller!.takePicture();
       await picture.saveTo(imagePath);
-
-      print('$imagePath');
-      print('bello');
-
-      Navigator.pop(context, imagePath);
+      Navigator.pop(context, imageID);
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to take picture: $e')),
       );
