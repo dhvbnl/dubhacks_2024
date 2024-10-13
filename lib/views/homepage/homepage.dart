@@ -31,11 +31,13 @@ class _HomePageState extends State<HomePage> {
   PlatformAppBar _buildAppBar() {
     return PlatformAppBar(
       backgroundColor: Colors.black,
-      title: Text(
-        'stills',
-        style: GoogleFonts.updock(
-          color: Colors.white,
-          fontSize: 40.0,
+      title: Center(
+        child: Text(
+          'stills',
+          style: GoogleFonts.updock(
+            color: Colors.white,
+            fontSize: 40.0,
+          ),
         ),
       ),
     );
@@ -84,43 +86,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCameraButton() {
-    return Consumer<StillsProvider>(builder: (context, stillsProvider, child) {
-      return Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          side: const BorderSide(color: Colors.white, width: 1.0),
-        ),
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.all(110.0),
-          child: PlatformIconButton(
-            icon: const Icon(
+     return Consumer<StillsProvider>(builder: (context, stillsProvider, child) {
+      return GestureDetector(
+        onTap: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CameraPage()),
+          );
+          if (result != null) {
+            setState(() {
+              filepath = result;
+            });
+            print(result);
+          }
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(color: Colors.white, width: 1.0),
+          ),
+          color: Colors.black,
+          child: Padding(
+            padding: const EdgeInsets.all(110.0),
+            child: const Icon(
               Icons.add_circle,
               size: 100,
               color: Colors.white,
             ),
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CameraPage()),
-              );
-              if (result != null) {
-                setState(() {
-                  filepath = result;
-                });
-                print(result);
-              }
-              if (filepath != '') {
-                stillsProvider.upsertStill(
-                  Still.create(prompt: prompt, path: filepath),
-                );
-              }
-            },
           ),
         ),
       );
-    });
+     });
   }
+
 
   Widget _buildHistoryButton() {
     return Consumer<StillsProvider>(
